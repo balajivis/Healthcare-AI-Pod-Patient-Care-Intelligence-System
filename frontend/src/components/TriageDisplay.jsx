@@ -23,29 +23,53 @@ const TriageDisplay = ({ triageData, patientId }) => {
   return (
     <div className="space-y-4">
       {/* Current Triage Status */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="font-semibold text-gray-800 mb-3">Triage Assessment</h3>
+      <div className="bg-white rounded-xl shadow-xl p-6 border border-blue-100">
+        <h3 className="font-bold text-lg text-blue-800 mb-4 flex items-center">
+          🌡️ Triage Assessment
+        </h3>
         
         {triageData ? (
           <div className="space-y-3">
-            {/* Urgency Score */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Urgency Score:</span>
-              <span className={`text-lg font-bold ${getScoreColor(triageData.urgency_score)}`}>
-                {triageData.urgency_score}/10
-              </span>
+            {/* Urgency Score - Large Display */}
+            <div className="text-center mb-4">
+              <div className="text-sm text-gray-600 mb-2">URGENCY SCORE</div>
+              <div className={`text-6xl font-bold ${getScoreColor(triageData.urgency_score)} mb-2`}>
+                {triageData.urgency_score}
+              </div>
+              <div className="text-lg text-gray-500">/ 10</div>
+              <div className={`text-xs px-3 py-1 rounded-full inline-block mt-2 ${
+                triageData.urgency_score >= 8 
+                  ? 'bg-red-100 text-red-800'
+                  : triageData.urgency_score >= 6
+                    ? 'bg-orange-100 text-orange-800' 
+                    : triageData.urgency_score >= 4
+                      ? 'bg-yellow-100 text-yellow-800'
+                      : 'bg-green-100 text-green-800'
+              }`}>
+                {triageData.urgency_score >= 8 ? 'CRITICAL' : 
+                 triageData.urgency_score >= 6 ? 'HIGH' :
+                 triageData.urgency_score >= 4 ? 'MODERATE' : 'LOW'}
+              </div>
             </div>
 
-            {/* Urgency Level */}
-            <div className={`px-3 py-2 rounded-lg border text-center ${getUrgencyColor(triageData.urgency_level)}`}>
-              <div className="font-semibold capitalize">{triageData.urgency_level}</div>
-              <div className="text-xs mt-1">Priority Level</div>
+            {/* Urgency Level - Enhanced Visual */}
+            <div className={`px-4 py-3 rounded-xl border-2 text-center ${getUrgencyColor(triageData.urgency_level)} mb-4`}>
+              <div className="font-bold text-lg capitalize flex items-center justify-center">
+                {triageData.urgency_level === 'high' ? '🔴' : 
+                 triageData.urgency_level === 'moderate' ? '🟡' : '🟢'}
+                <span className="ml-2">{triageData.urgency_level} PRIORITY</span>
+              </div>
+              <div className="text-xs mt-1 font-medium">MEDICAL PRIORITY LEVEL</div>
             </div>
 
-            {/* Recommended Action */}
-            <div className="border-t pt-3">
-              <h4 className="font-medium text-gray-700 mb-2">Recommended Action:</h4>
-              <p className="text-sm text-gray-600">{triageData.recommended_action}</p>
+            {/* Recommended Action - Enhanced */}
+            <div className="border-t-2 border-gray-200 pt-4">
+              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
+                👥 Recommended Action:
+              </h4>
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-3 rounded">
+                <p className="text-sm font-medium text-blue-800">{triageData.recommended_action}</p>
+              </div>
             </div>
 
             {/* Reasoning */}
@@ -89,8 +113,10 @@ const TriageDisplay = ({ triageData, patientId }) => {
       </div>
 
       {/* Patient Information */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="font-semibold text-gray-800 mb-3">Session Information</h3>
+      <div className="bg-white rounded-xl shadow-xl p-4 border border-blue-100">
+        <h3 className="font-bold text-blue-800 mb-3 flex items-center">
+          📁 Session Information
+        </h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-600">Patient ID:</span>
@@ -112,8 +138,10 @@ const TriageDisplay = ({ triageData, patientId }) => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="font-semibold text-gray-800 mb-3">Quick Actions</h3>
+      <div className="bg-white rounded-xl shadow-xl p-4 border border-blue-100">
+        <h3 className="font-bold text-blue-800 mb-3 flex items-center">
+          ⚡ Quick Actions
+        </h3>
         <div className="space-y-2">
           <button className="w-full text-left px-3 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded border transition">
             View Patient History

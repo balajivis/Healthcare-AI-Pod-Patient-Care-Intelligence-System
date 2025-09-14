@@ -20,7 +20,7 @@ const ChatInterface = ({ patientId, onTriageUpdate }) => {
     if (patientId) {
       setMessages([{
         type: 'ai',
-        content: 'Hello! I\'m your AI health assistant. Please describe your symptoms or health concerns, and I\'ll help assess your situation.',
+        content: '👋 Hello! I\'m your AI health assistant powered by advanced medical knowledge. Please describe your symptoms, and I\'ll provide immediate triage assessment with urgency scoring and medical guidance. How can I help you today?',
         timestamp: new Date().toISOString()
       }]);
     }
@@ -42,7 +42,7 @@ const ChatInterface = ({ patientId, onTriageUpdate }) => {
     setError(null);
 
     try {
-      const response = await fetch('/api/chat/message', {
+      const response = await fetch('http://localhost:8083/api/chat/message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,11 +157,13 @@ const ChatInterface = ({ patientId, onTriageUpdate }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md h-96 flex flex-col">
+    <div className="bg-white rounded-xl shadow-xl h-[600px] flex flex-col border border-blue-100">
       {/* Header */}
-      <div className="bg-gray-50 px-4 py-3 rounded-t-lg border-b">
-        <h3 className="font-semibold text-gray-800">Patient Consultation</h3>
-        <p className="text-sm text-gray-600">Describe your symptoms for AI-powered triage</p>
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 rounded-t-xl text-white">
+        <h3 className="font-bold text-lg flex items-center">
+          🤖 AI Health Assistant
+        </h3>
+        <p className="text-blue-100 text-sm mt-1">Describe your symptoms for intelligent medical triage</p>
       </div>
 
       {/* Messages */}
@@ -201,7 +203,7 @@ const ChatInterface = ({ patientId, onTriageUpdate }) => {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Describe your symptoms here..."
+            placeholder="e.g., 'I have chest pain and shortness of breath' or 'Experiencing headache and fever for 2 days'"
             className="flex-1 resize-none border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="2"
             disabled={isLoading}
